@@ -51,7 +51,7 @@ public final class VectorScoringPlugin extends Plugin implements ScriptPlugin {
 
         @Override
         public String getType() {
-            return "binary_vector_score";
+            return "knn";
         }
 
         @Override
@@ -62,7 +62,7 @@ public final class VectorScoringPlugin extends Plugin implements ScriptPlugin {
             }
 
             // we use the script "source" as the script identifier
-            if ("vector_scoring".equals(scriptSource)) {
+            if ("binary_vector_score".equals(scriptSource)) {
                 SearchScript.Factory factory = (p, lookup) -> new SearchScript.LeafFactory() {
 
                     private final double[] inputVector;
@@ -71,7 +71,7 @@ public final class VectorScoringPlugin extends Plugin implements ScriptPlugin {
                     final boolean useStoredVectorNorm;
                     final boolean cosine;
                     {
-                        final Object field = p.get("vector_field");
+                        final Object field = p.get("field");
                         if (field == null)
                             throw new IllegalArgumentException("binary_vector_score script requires field vector_field");
                         this.field = field.toString();
