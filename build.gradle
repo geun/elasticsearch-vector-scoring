@@ -17,7 +17,34 @@
  * under the License.
  */
 
+buildscript {
+  repositories {
+    mavenCentral()
+    maven {
+      name 'sonatype-snapshots'
+      url 'http://oss.sonatype.org/content/repositories/snapshots/'
+    }
+    jcenter()
+  }
+  dependencies {
+    classpath "org.elasticsearch.gradle:build-tools:$elasticsearchVersion"
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'elasticsearch.esplugin'
+
+licenseFile = rootProject.file('LICENSE')
+noticeFile = rootProject.file('NOTICE')
+
 esplugin {
+  name 'elastic-vector-scoring'
   description 'Provides a fast vector multiplication script.'
   classname 'com.gosololaw.elasticsearch.VectorScoringPlugin'
+
+}
+
+dependencies {
+  compile "org.elasticsearch:elasticsearch:$elasticsearchVersion"
 }
